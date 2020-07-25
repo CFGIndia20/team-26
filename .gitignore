@@ -4,3 +4,6 @@ Team*.zip
 *.crt
 *.key
 *.ovpn
+*.vscode
+*.idea
+*.env
