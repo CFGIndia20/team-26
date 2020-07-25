@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contribution;
 use App\Donor;
 use App\Helper\ResponseHelper;
 use Illuminate\Http\Request;
@@ -52,5 +53,32 @@ class DonorController extends Controller
         $updatedDonor = Donor::where('id','=',$donor->id)->update(['is_verified'=> $verificationId]);
 
         return ResponseHelper::updated($updatedDonor);
+    }
+
+    /*
+ * Number of donations
+ * highest donation top 3 [user_name, amount]
+ * avg donation of all the donations
+ * frequency of the donor
+ * top 3 centres with maxium number of donors
+ *
+ */
+    public function getDonorReport() {
+        $data = collect();
+        $contributions = Contribution::with('donor')->orderBy('amount', 'desc')->take(3)->get();
+        $top3Contribution = array();
+        foreach ($contributions as $contribution) {
+            array_push($top3Contribution, [
+                "name" => $contribution->donor->user->name,
+                "amount" => $contribution->amount,
+            ]);
+        }
+
+        $data->push([
+            "number_of_donations"=> Contribution::all()->count(),
+            "top_3_donation" => $top3Contribution,
+            "avg_donation" => Contribution::selectRaw("avg(amount) avg_amount")->get()->all()[0]->avg_amount,
+        ]);
+        return ResponseHelper::success($data);
     }
 }
