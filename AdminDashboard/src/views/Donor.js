@@ -151,11 +151,11 @@ class Tables extends React.Component {
                                 <CardBody>
                                     {/* <Form> */}
                                     <Row>
-                                        <Col lg="12" md="12">
+                                        <Col lg="12" md="12" >
                                             <Table responsive borderless hover>
                                                 <thead>
                                                     <tr>
-                                                        <th>Update Feedback</th>
+                                                        <th>Update</th>
                                                         {/* <th>Donor ID</th> */}
                                                         <th>Donor Name</th>
                                                         <th>Phone Number </th>
@@ -197,6 +197,10 @@ class Tables extends React.Component {
                         <ModalBody>
                             <Table>
                                 <tr>
+                                    <td>Id</td>
+                                    <td>{this.state.tempDonorId}</td>
+                                </tr>
+                                <tr>
                                     <td>Name</td>
                                     <td>{this.state.tempDonorName}</td>
                                 </tr>
@@ -209,16 +213,76 @@ class Tables extends React.Component {
                                     <td>{this.state.tempDonorMobile}</td>
                                 </tr>
                                 <tr>
-                                    <td>Add Feedback</td>
+                                    <td>Select Status</td>
                                     <td>
                                         {" "}
                                         <FormGroup row>
+                                            <Label for="tempDonorCentre" sm={2}>
+                                                Select
+                                            </Label>
                                             <Col sm={10}>
-                                                <Input type="textarea" name="text" name="tempFeedback" onChange = {this.onChangeHandler}/>
+                                                <Input
+                                                    type="select"
+                                                    onChange={this.onChangeHandler}
+                                                    name="tempStatus"
+                                                >
+                                                    <option value="1">Verify</option>
+                                                    <option value="2">Reject</option>
+                                                </Input>
                                             </Col>
                                         </FormGroup>
                                     </td>
                                 </tr>
+                                {this.state.tempStatus === "1" ? (
+                                    <>
+                                        <tr>
+                                            <td>Select Center</td>
+                                            <td>
+                                                {" "}
+                                                <FormGroup row>
+                                                    <Label for="tempDonorCentre" sm={2}>
+                                                        Select
+                                                    </Label>
+                                                    <Col sm={10}>
+                                                        <Input
+                                                            type="select"
+                                                            onChange={this.onChangeHandler}
+                                                            name="tempDonorCentre"
+                                                        >
+                                                            {this.state.centers.map((centre) => (
+                                                                <option value={centre.id}>
+                                                                    {centre.name}
+                                                                </option>
+                                                            ))}
+                                                        </Input>
+                                                    </Col>
+                                                </FormGroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Select Unit</td>
+                                            <td>
+                                                {" "}
+                                                <FormGroup row>
+                                                    <Label for="tempDonorUnit" sm={2}>
+                                                        Select
+                                                    </Label>
+                                                    <Col sm={10}>
+                                                        <Input
+                                                            type="select"
+                                                            onChange={this.onChangeHandler}
+                                                            name="tempDonorUnit"
+                                                        >
+                                                            {this.state.units.map((unit) => (
+                                                                <option value={unit.id}>{unit.name}</option>
+                                                            ))}
+                                                        </Input>
+                                                    </Col>
+                                                </FormGroup>
+                                            </td>
+                                        </tr>
+                                    </>
+                                ) : null}
                             </Table>
                         </ModalBody>
                         <ModalFooter>
