@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Donor;
-use App\Helpers\ResponseHelper;
+use App\Helper\ResponseHelper;
 use Illuminate\Http\Request;
 
 class DonorController extends Controller
@@ -13,10 +13,24 @@ class DonorController extends Controller
             ->orWhere('is_verified', '=',Donor::DONOR_VERIFIED)
             ->with('user')
         ->get();
-        return response()->json([
-            "message"    => "Successfully fetched",
-            "data"       => $donor
-        ], 200);
+        return ResponseHelper::success($donor);
+    }
+
+    public function getAllDonors() {
+        $donors = Donor::with('user')->get();
+        $data = collect();
+        foreach ($donors as $donor) {
+            $data->push(
+                [
+                    'id' => $donor->id,
+                    'name' => $donor->user->name,
+                    'mobile' => $donor->user->phone_number,
+                    'email' => $donor->user->email,
+                ]
+            );
+        }
+
+        return ResponseHelper::success($data);
     }
 
     public function getRejectedDonor() {

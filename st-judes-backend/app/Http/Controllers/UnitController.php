@@ -2,84 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\ResponseHelper;
 use App\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UnitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   public function getAllUnits() {
+        return ResponseHelper::success(Unit::all());
+   }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+   public function getRatingAccordingToUnit($unit_id) {
+       $unit = Unit::find($unit_id);
+       if ($unit) {
+           $unit_obj = DB::select("SELECT AVG(question_responses.rating) as avg, questions.unit_id from questions INNER JOIN question_responses ON question_responses.question_id = questions.id WHERE questions.unit_id = ".$unit_id." GROUP BY questions.unit_id");
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+           return ResponseHelper::success($unit_obj);
+       }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Unit  $unit
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Unit $unit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Unit  $unit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Unit $unit)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Unit  $unit
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Unit $unit)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Unit  $unit
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Unit $unit)
-    {
-        //
-    }
+       return ResponseHelper::badRequest();
+   }
 }
