@@ -1,5 +1,5 @@
 import React from "react";
-
+import axios from "axios";
 // reactstrap components
 import {
     Card,
@@ -30,59 +30,14 @@ class Tables extends React.Component {
             modal: false,
             tempDonorId: "",
             tempDonorName: "",
-            tempDonorMobile: "",
+            tempDonorphone_number: "",
             tempDonorEmail: "",
             tempStatus: "",
             tempDonorCentre: "",
             tempDonorUnit: "",
-            donors: [
-                {
-                    id: "sduifnu4w4",
-                    name: "Ashwin",
-                    mobile: "993848294",
-                    email: "goelashwin36@gmail.com",
-                },
-                {
-                    id: "erihnentohn",
-                    name: "Harsh",
-                    mobile: "998438294",
-                    email: "harsh@gmail.com",
-                },
-                {
-                    id: "weonowngw",
-                    name: "Anmol",
-                    mobile: "98433849",
-                    email: "anmol@gmail.com",
-                },
-            ],
-            centers: [
-                {
-                    id: "1",
-                    name: "Random",
-                },
-                {
-                    id: "2",
-                    name: "Random",
-                },
-                {
-                    id: "3",
-                    name: "Random",
-                },
-            ],
-            units: [
-                {
-                    id: "1",
-                    name: "Alfa",
-                },
-                {
-                    id: "2",
-                    name: "Beta",
-                },
-                {
-                    id: "3",
-                    name: "Gamma",
-                },
-            ],
+            donors: [],
+            centers: [],
+            units: [],
             statuses: [
                 {
                     "1": "In process",
@@ -100,6 +55,19 @@ class Tables extends React.Component {
         //Fetch units
         //Fetch non verified donors
         // this.setState({ filteredTrips: this.state.trips });
+
+        axios.get("http://localhost:8000/api/centre/all").then((res) => {
+            this.setState({ centers: res.data.data });
+        });
+
+        axios.get("http://localhost:8000/api/unit/all").then((res) => {
+            this.setState({ units: res.data.data });
+        });
+
+        axios.get("http://localhost:8000/api/donor/unverified").then((res) => {
+            console.log("DATA:", res.data.data);
+            this.setState({ donors: res.data.data });
+        });
     }
 
     onModalClickHandler = (e) => {
@@ -108,20 +76,22 @@ class Tables extends React.Component {
                 modal: false,
                 tempDonorId: "",
                 tempDonorName: "",
-                tempDonorMobile: "",
+                tempDonorphone_number: "",
                 tempDonorEmail: "",
                 tempStatus: "",
                 tempDonorCentre: "",
                 tempDonorUnit: "",
             });
         } else {
-            let donor = this.state.donors.find((x) => x.id === e.target.name);
+            console.log(e.target.name)
+            let donor = this.state.donors.find((x) => x.user.id == e.target.name);
+            console.log(donor)
             this.setState({
                 modal: true,
                 tempDonorId: e.target.name,
-                tempDonorName: donor.name,
-                tempDonorMobile: donor.mobile,
-                tempDonorEmail: donor.email,
+                tempDonorName: donor.user.name,
+                tempDonorphone_number: donor.user.phone_number,
+                tempDonorEmail: donor.user.email,
             });
         }
     };
@@ -132,7 +102,19 @@ class Tables extends React.Component {
     };
 
     onSubmitRequestHandler = (event) => {
-        console.log("hello");
+        let update = {
+            donor_id: parseInt(this.state.tempDonorId),
+            is_verified: parseInt(this.state.tempStatus),
+            donor_centre: parseInt(this.state.tempDonorCentre),
+            donor_unit: parseInt(this.state.tempDonorUnit),
+        };
+        console.log(update);
+
+        axios.post("http://localhost:8000/api/donor/updateVerificationStatus", update).then((res) => {
+            console.log(update);
+            alert("Status Updated");
+            this.onModalClickHandler();
+        });
     };
 
     render() {
@@ -151,11 +133,11 @@ class Tables extends React.Component {
                                 <CardBody>
                                     {/* <Form> */}
                                     <Row>
-                                        <Col lg="12" md="12" >
+                                        <Col lg="12" md="12">
                                             <Table responsive borderless hover>
                                                 <thead>
                                                     <tr>
-                                                        <th>Update</th>
+                                                        <th>Verify Donor</th>
                                                         {/* <th>Donor ID</th> */}
                                                         <th>Donor Name</th>
                                                         <th>Phone Number </th>
@@ -163,24 +145,26 @@ class Tables extends React.Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {this.state.donors.map((donor) => (
-                                                        <tr>
-                                                            <td>
-                                                                <Button
-                                                                    name={donor.id}
-                                                                    size="sm"
-                                                                    color="primary"
-                                                                    onClick={this.onModalClickHandler}
-                                                                >
-                                                                    Update
-                                                                </Button>
-                                                            </td>
-                                                            {/* <td>{donor.id}</td> */}
-                                                            <td>{donor.name}</td>
-                                                            <td>{donor.mobile}</td>
-                                                            <td>{donor.email}</td>
-                                                        </tr>
-                                                    ))}
+                                                    {this.state.donors.length > 0
+                                                        ? this.state.donors.map((donor) => (
+                                                              <tr>
+                                                                  <td>
+                                                                      <Button
+                                                                          name={donor.user.id}
+                                                                          size="sm"
+                                                                          color="primary"
+                                                                          onClick={this.onModalClickHandler}
+                                                                      >
+                                                                          Verify
+                                                                      </Button>
+                                                                  </td>
+                                                                  {/* <td>{donor.id}</td> */}
+                                                                  <td>{donor.user.name}</td>
+                                                                  <td>{donor.user.phone_number}</td>
+                                                                  <td>{donor.user.email}</td>
+                                                              </tr>
+                                                          ))
+                                                        : null}
                                                 </tbody>
                                             </Table>
                                         </Col>
@@ -209,8 +193,8 @@ class Tables extends React.Component {
                                     <td>{this.state.tempDonorEmail}</td>
                                 </tr>
                                 <tr>
-                                    <td>Mobile</td>
-                                    <td>{this.state.tempDonorMobile}</td>
+                                    <td>phone_number</td>
+                                    <td>{this.state.tempDonorphone_number}</td>
                                 </tr>
                                 <tr>
                                     <td>Select Status</td>
@@ -249,11 +233,13 @@ class Tables extends React.Component {
                                                             onChange={this.onChangeHandler}
                                                             name="tempDonorCentre"
                                                         >
-                                                            {this.state.centers.map((centre) => (
-                                                                <option value={centre.id}>
-                                                                    {centre.name}
-                                                                </option>
-                                                            ))}
+                                                            {this.state.centers.length > 0
+                                                                ? this.state.centers.map((centre) => (
+                                                                      <option value={centre.id}>
+                                                                          {centre.name}
+                                                                      </option>
+                                                                  ))
+                                                                : null}
                                                         </Input>
                                                     </Col>
                                                 </FormGroup>
@@ -273,9 +259,13 @@ class Tables extends React.Component {
                                                             onChange={this.onChangeHandler}
                                                             name="tempDonorUnit"
                                                         >
-                                                            {this.state.units.map((unit) => (
-                                                                <option value={unit.id}>{unit.name}</option>
-                                                            ))}
+                                                            {this.state.units.length > 0
+                                                                ? this.state.units.map((unit) => (
+                                                                      <option value={unit.id}>
+                                                                          {unit.name}
+                                                                      </option>
+                                                                  ))
+                                                                : null}
                                                         </Input>
                                                     </Col>
                                                 </FormGroup>
