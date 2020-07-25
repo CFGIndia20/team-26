@@ -22,7 +22,6 @@ BODY: StartDate
 
 Optional
 GET /units
-
 ```
 
 3. Contributions

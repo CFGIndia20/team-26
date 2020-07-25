@@ -28,6 +28,7 @@
 -   Id
 -   Donor Id
 -   Unit Id
+-   Center Id
 
 6. Contributions
 
@@ -46,6 +47,7 @@
 
 8. Questionnaire Respose TODO: Modify acc to implementation
 
+-   PatientId
 -   ResponseId
 -   QuestionId
 -   Response(star(1-9))
@@ -54,5 +56,13 @@
 9. Patient
 
 -   Id
--   HospitalId
+-   CentreId
 -   Mobile Number
+-   AdmissionTime
+
+10. Centre
+
+-   Id
+-   Name
+-   Code
+-   Address
