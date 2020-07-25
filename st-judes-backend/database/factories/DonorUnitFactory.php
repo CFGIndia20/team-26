@@ -13,5 +13,6 @@ $factory->define(\App\DonorUnit::class, function (Faker $faker) {
         'donor_id' => Donor::all()->random()->id,
         'unit_id' => Unit::all()->random()->id,
         'centre_id' => Centre::all()->random()->id,
+        'contribution_id' => \App\Contribution::all()->random()->id,
     ];
 });
