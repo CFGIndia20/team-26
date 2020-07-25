@@ -18,10 +18,8 @@ class CreateDonorUnitsTable extends Migration
             $table->unsignedBigInteger('donor_id');
             $table->unsignedBigInteger('unit_id');
             $table->unsignedBigInteger('centre_id');
-
+            $table->unsignedBigInteger('contribution_id');
             $table->timestamps();
-
-
         });
     }
 

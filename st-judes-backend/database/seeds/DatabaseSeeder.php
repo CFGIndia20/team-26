@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
          $this->call(PatientSeeder::class);
          $this->call(DonorSeeder::class);
          $this->call(UnitSeeder::class);
-         $this->call(DonorUnitSeeder::class);
          $this->call(QuestionSeeder::class);
          $this->call(QuestionResponseSeeder::class);
          $this->call(ExtraQuestionSeeder::class);
         $this->call(ContributionSeeder::class);
+        $this->call(DonorUnitSeeder::class);
 
     }
 }
