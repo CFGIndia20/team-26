@@ -3,83 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Donor;
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 
 class DonorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function getVerifiedDonor() {
+        $donor = Donor::where('is_verified', '=',Donor::DONOR_IN_REVIEW)
+            ->orWhere('is_verified', '=',Donor::DONOR_VERIFIED)
+            ->with('user')
+        ->get();
+        return response()->json([
+            "message"    => "Successfully fetched",
+            "data"       => $donor
+        ], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function getRejectedDonor() {
+            $donor = Donor::where('is_verified', '=',Donor::DONOR_REJECTED)
+                ->get();
+            if ($donor) {
+                return ResponseHelper::success($donor);
+            } else {
+                return  ResponseHelper::badRequest();
+            }
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function changeDonorVerification(Request $request) {
+        $donorId = $request->input('donor_id');
+        $verificationId = $request->input('is_verified');
+        $donor = Donor::find($donorId);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Donor $donor)
-    {
-        //
-    }
+        $updatedDonor = Donor::where('id','=',$donor->id)->update(['is_verified'=> $verificationId]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Donor $donor)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Donor $donor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Donor $donor)
-    {
-        //
+        return ResponseHelper::updated($updatedDonor);
     }
 }

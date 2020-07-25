@@ -10,8 +10,8 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\DonorUnit::class, function (Faker $faker) {
     return [
-        'donor_id' => Donor::all()->random()->first()->id,
-        'unit_id' => Unit::all()->random()->first()->id,
-        'centre_id' => Centre::all()->random()->first()->id,
+        'donor_id' => Donor::all()->random()->id,
+        'unit_id' => Unit::all()->random()->id,
+        'centre_id' => Centre::all()->random()->id,
     ];
 });

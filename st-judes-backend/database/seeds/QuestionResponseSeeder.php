@@ -11,6 +11,13 @@ class QuestionResponseSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\QuestionResponse::class, rand(10, 20))->create();
+        foreach (\App\Patient::all() as $patient){
+            foreach (\App\Question::all() as $question) {
+                factory(\App\QuestionResponse::class, rand(10, 20))->create([
+                        'question_id' => $question->id,
+                        'patient_id' => $patient->id,
+                    ]);
+            }
+        }
     }
 }

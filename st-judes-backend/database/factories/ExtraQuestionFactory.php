@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\ExtraQuestion::class, function (Faker $faker) {
     return [
-        'unit_id' => \App\Unit::all()->random()->first()->id,
-        'question_id' => \App\Question::all()->random()->first()->id,
+        'unit_id' => \App\Unit::all()->random()->id,
+        'question_id' => \App\Question::all()->random()->id,
     ];
 });
