@@ -17,15 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+/**
+ * Done
+ */
 Route::get('/donor/unverified', 'DonorController@getVerifiedDonor');
-
 Route::post('/donor/updateVerificationStatus', 'DonorController@changeDonorVerification');
+Route::get('/unit/{unit_id}/review', 'UnitController@getRatingAccordingToUnit');
+Route::get('/centre/{centre_id}/review', 'CentreController@getRatingAccordingToCentre');
+Route::get('donor/all','DonorController@getAllDonors');
+Route::get('unit/all','UnitController@getAllUnits');
+Route::get('centre/all','CentreController@getAllCentres');
 
-Route::post('/centre/{unit_id}/review', 'CentreController@getUnitReview');
-
-Route::post('/centre/{centre_id}/review', 'CentreController@getCentreReview');
-
+/**
+ * Todo
+ */
 Route::get('/contribution', 'ContributionController@getContribution');
 
 Route::post('/contribution/comment', 'ContributionController@postComment');

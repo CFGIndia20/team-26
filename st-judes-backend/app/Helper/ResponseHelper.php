@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Helpers;
+namespace App\Helper;
 
 use Symfony\Component\HttpFoundation\Response;
 

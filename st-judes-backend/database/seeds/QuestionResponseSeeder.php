@@ -13,7 +13,7 @@ class QuestionResponseSeeder extends Seeder
     {
         foreach (\App\Patient::all() as $patient){
             foreach (\App\Question::all() as $question) {
-                factory(\App\QuestionResponse::class, rand(10, 20))->create([
+                factory(\App\QuestionResponse::class)->create([
                         'question_id' => $question->id,
                         'patient_id' => $patient->id,
                     ]);

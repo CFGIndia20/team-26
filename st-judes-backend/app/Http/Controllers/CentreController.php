@@ -3,83 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Centre;
+use App\Helper\ResponseHelper;
+use App\Question;
+use App\QuestionResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CentreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getAllCentres()
     {
-        //
+        return ResponseHelper::success(Centre::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getRatingAccordingToCentre($centre_id)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Centre  $centre
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Centre $centre)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Centre  $centre
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Centre $centre)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Centre  $centre
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Centre $centre)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Centre  $centre
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Centre $centre)
-    {
-        //
+        $centre = Centre::find($centre_id);
+        if ($centre) {
+            $centre_obj = DB::select("SELECT AVG(question_responses.rating) as avg, centres.id from question_responses INNER JOIN patients on patients.id= question_responses.patient_id INNER JOIN centres on patients.centre_id= centres.id where centres.id = ".$centre_id ." GROUP BY centres.id");
+            return ResponseHelper::success($centre_obj);
+        } else {
+            return  ResponseHelper::badRequest();
+        }
     }
 }
