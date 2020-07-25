@@ -17,3 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/donor/unverified', 'DonorController@getVerifiedDonor');
+
+Route::post('/donor/updateVerificationStatus', 'DonorController@changeDonorVerification');
+
+Route::post('/centre/{unit_id}/review', 'CentreController@getUnitReview');
+
+Route::post('/centre/{centre_id}/review', 'CentreController@getCentreReview');
+
+Route::get('/contribution', 'ContributionController@getContribution');
+
+Route::post('/contribution/comment', 'ContributionController@postComment');
+
+Route::get('/reports/contribution', 'ContributionController@getAllContribution');
+
+Route::get('/questions', 'QuestionController@getAll');

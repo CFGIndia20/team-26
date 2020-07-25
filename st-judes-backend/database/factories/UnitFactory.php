@@ -9,5 +9,6 @@ $factory->define(\App\Unit::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
         'description' => $faker->sentence,
+        'code' => $faker->slug(3),
     ];
 });
