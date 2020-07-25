@@ -5,13 +5,22 @@ import Login from "views/Login.js";
 import Tables from "views/Tables.js";
 import Icons from "views/Icons.js";
 import TripSearch from "views/TripSearch.js";
+import Donors from "views/Donor.js"
+import Contributions from "views/Contributions.js"
 
 var routes = [
     {
-        path: "/index",
-        name: "Dashboard",
+        path: "/donors",
+        name: "Verify Donors",
         icon: "ni ni-tv-2 text-primary",
-        component: Index,
+        component: Donors,
+        layout: "/admin",
+    },
+    {
+        path: "/contributions",
+        name: "Contributions",
+        icon: "ni ni-tv-2 text-primary",
+        component: Contributions,
         layout: "/admin",
     },
     {
