@@ -18,6 +18,7 @@ class CreateQuestionResponsesTable extends Migration
             $table->unsignedBigInteger('patient_id')->nullable();
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('rating');
+            $table->string('description')->nullable();
             $table->timestamps();
 
         });

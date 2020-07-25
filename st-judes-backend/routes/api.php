@@ -28,10 +28,12 @@ Route::get('donor/all','DonorController@getAllDonors');
 Route::get('unit/all','UnitController@getAllUnits');
 Route::get('centre/all','CentreController@getAllCentres');
 Route::get('/questions', 'QuestionController@getAll');
+Route::get('/contribution/centre/{donor_id}', 'ContributionController@getContribution');
+Route::get('/contribution/unit/{donor_id}', 'ContributionController@getContribution');
 
 /**
  * Todo
  */
-Route::get('/contribution/{user_id}', 'ContributionController@getContribution');
-Route::post('/contribution/comment', 'ContributionController@postComment');
-Route::get('/reports/contribution', 'ContributionController@getAllContribution');
+//Route::get('/contribution/all','');
+Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postComment');
+//Route::get('report/insights', );
