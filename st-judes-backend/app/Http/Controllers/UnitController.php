@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contribution;
+use App\Donor;
 use App\Helper\ResponseHelper;
 use App\Unit;
 use Illuminate\Http\Request;
@@ -23,4 +25,14 @@ class UnitController extends Controller
 
        return ResponseHelper::badRequest();
    }
+
+    public function getDonorContributionAccordingToUnit($donor_id) {
+        $donorObj = Donor::find($donor_id);
+        if ($donorObj) {
+            $contributionObj = Contribution::join('donor_units', 'contributions.id', 'donor_units.contribution_id')->join('units', 'donor_units.unit_id', 'units.id' )->where('donor_units.donor_id',
+                '=', $donor_id)->get();
+            return ResponseHelper::success($contributionObj);
+        }
+        return ResponseHelper::badRequest();
+    }
 }
