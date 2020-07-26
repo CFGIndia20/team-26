@@ -1,5 +1,5 @@
 import React from "react";
-
+import axios from "axios";
 // reactstrap components
 import {
     Card,
@@ -29,21 +29,21 @@ class Tables extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    k: "Max contribution",
-                    v: "val",
-                },
-                {
-                    k: "Max contribution",
-                    v: "val",
-                },
-                {
-                    k: "Max contribution",
-                    v: "val",
-                },
-            ],
+            data: {
+                number_of_donations: "",
+                top_3_donation: [],
+                avg_donation: "",
+                top_3_frequent_donors: [],
+                top_3_centre_max_num_of_donors: [],
+            },
         };
+    }
+
+    componentDidMount() {
+        axios.get("http://localhost:8000/api/report/insights").then((res) => {
+            this.setState({ data: res.data.data });
+            console.log(res.data.data);
+        });
     }
 
     onChangeHandler = async (event) => {
@@ -66,16 +66,73 @@ class Tables extends React.Component {
                                 </CardHeader>
                                 <CardBody>
                                     <Row>
-                                        {this.state.data.map((d) => (
-                                            <Col>
-                                                <Card>
-                                                    <CardBody>
-                                                        <CardTitle>{d.k}</CardTitle>
-                                                        <CardText>{d.v}</CardText>
-                                                    </CardBody>
-                                                </Card>
-                                            </Col>
-                                        ))}
+                                        <Col>
+                                            <Card>
+                                                <CardBody>
+                                                    <CardTitle>Number of Donations</CardTitle>
+                                                    <CardText>{this.state.data.number_of_donations}</CardText>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+
+                                        <Col>
+                                            <Card>
+                                                <CardBody>
+                                                    <CardTitle>Top 3 Donations</CardTitle>
+                                                    {this.state.data.top_3_donation.map((donation) => (
+                                                        <>
+                                                            <CardText>Donor: {donation.name}</CardText>
+                                                            <CardText>Amount: {donation.amt}</CardText>
+                                                        </>
+                                                    ))}
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+
+                                        <Col>
+                                            <Card>
+                                                <CardBody>
+                                                    <CardTitle>Average Donation</CardTitle>
+                                                    <CardText>{this.state.data.avg_donation}</CardText>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+
+                                        <Col>
+                                            <Card>
+                                                <CardBody>
+                                                    <CardTitle>Top 3 Frequent Donors</CardTitle>
+                                                    {this.state.data.top_3_frequent_donors.map((donation) => (
+                                                        <>
+                                                            <CardText>Donor: {donation.name}</CardText>
+                                                            <CardText>
+                                                                Numer of donations: {donation.contri_count}
+                                                            </CardText>
+                                                        </>
+                                                    ))}
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+
+                                        <Col>
+                                            <Card>
+                                                <CardBody>
+                                                    <CardTitle>Top 3 Centres with max Donors</CardTitle>
+                                                    {this.state.data.top_3_centre_max_num_of_donors.map(
+                                                        (donation) => (
+                                                            <>
+                                                                <CardText>
+                                                                    Number of Donors: {donation.max_donors}
+                                                                </CardText>
+                                                                <CardText>
+                                                                    Centre Name: {donation.name}
+                                                                </CardText>
+                                                            </>
+                                                        )
+                                                    )}
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
                                     </Row>
                                 </CardBody>
                             </Card>
