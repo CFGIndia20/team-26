@@ -1,0 +1,71 @@
+import React,{useState,useEffect} from "react";
+import {
+ useSpeechSynthesis,
+ useSpeechRecognition
+}
+ from "react-speech-kit";
+import
+{
+ indexOfFuzzyWordMatch,
+ indexOfFuzzyNumberMatch,
+}
+from "./fuzzyMatchers";
+function Question(props){
+const { question }=props;
+const [value,setValues] = useSate("");
+const [answer,setAnswer] =useState(null);
+const {speak }= useSpeechSysnthesis();
+
+const answerQuestionWithText=()=>{
+let index=indexOfFuzzyNumberMatch(value,question.answers);
+if(index ===-1){
+index=indexOfFuzzyWordMatch(value,question.answers);
+}
+if(index ===-1) return;
+setAnswer(question.answers[index]);
+setValue("");
+};
+const{liste,listening,stop}=useSpeechRecognition ({
+onResult:result=>{
+setvalue("");
+},
+onEnd:answerQuestionWithText
+});
+const readQuestion=() =>{
+ const answers =question.answers.map{
+  (answer,index)=>'${index+1}-$(answer)'
+};
+const message=[question.question,...answer].join(",");
+speak({text:message});
+};
+useEffect(() => {
+if(!answer) return;
+speak ({text:'OK,${answer}'});
+},[answer]);
+return (
+<div>
+<p>
+<span>{question.question}</span>
+<button onClick=(readQuestion)>.</button>
+</p>
+<ul>
+{question.answers.mp((answer,index)=>(<li onClick={()=>setAnswer(answer)}><span>{'${index +1}-${answer}'}</span>
+</li>
+))}
+</ul>
+{answer && <p>{answer}</p>
+<div>
+<textarea
+value={value}
+onChange={event=>setValue(event.target.value)}
+/>
+<button onMouseDown={listen} onMouseUp={stop}>
+~~~~~~yaha mic symbol hai~~~
+</button>
+<button onClick={anwerQuestionWithText}>Send</button>
+{listening && <div>Go ahead I'm listening</div>}
+</div>
+</div>
+);
+}
+export default Question;
