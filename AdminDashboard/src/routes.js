@@ -1,14 +1,19 @@
 import Index from "views/Index.js";
-import Profile from "views/Profile.js";
-import Register from "views/Register.js";
 import Login from "views/Login.js";
-import Tables from "views/Tables.js";
 import Icons from "views/Icons.js";
-import TripSearch from "views/TripSearch.js";
-import Donors from "views/Donor.js"
-import Contributions from "views/Contributions.js"
+import Donors from "views/Donor.js";
+import Contributions from "views/Contributions.js";
+import Questionnaire from "views/Questionnaire.js";
+import Insights from "views/Insights.js";
 
 var routes = [
+    {
+        path: "/insights",
+        name: "Insights",
+        icon: "ni ni-tv-2 text-primary",
+        component: Insights,
+        layout: "/admin",
+    },
     {
         path: "/donors",
         name: "Verify Donors",
@@ -24,43 +29,11 @@ var routes = [
         layout: "/admin",
     },
     {
-        path: "/tables",
-        name: "Tables",
+        path: "/questions",
+        name: "Questionnaire",
         icon: "ni ni-tv-2 text-primary",
-        component: Tables,
+        component: Questionnaire,
         layout: "/admin",
-    },
-    {
-        path: "/profile",
-        name: "Profile",
-        icon: "ni ni-tv-2 text-primary",
-        component: Profile,
-        layout: "/admin",
-    },
-
-    {
-        path: "/icons",
-        name: "Icons",
-        icon: "ni ni-tv-2 text-primary",
-        component: Icons,
-        layout: "/admin",
-    },
-
-
-
-    {
-        path: "/trip/search",
-        name: "Trip Search",
-        icon: "ni ni-single-02 text-yellow",
-        component: TripSearch,
-        layout: "/admin",
-    },
-    {
-        path: "/register",
-        name: "Register",
-        icon: "ni ni-tv-2 text-primary",
-        component: Register,
-        layout: "/auth",
     },
 
     {
@@ -71,4 +44,5 @@ var routes = [
         layout: "/auth",
     },
 ];
+
 export default routes;
