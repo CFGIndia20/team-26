@@ -11,7 +11,6 @@ if(Session::hasSession('old'))
     $old = Session::getSession('old');
     Session::unsetSession('old');
 }
-
 if(Session::hasSession('errors'))
 {
     $errors = unserialize(Session::getSession('errors'));
