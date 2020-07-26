@@ -19,4 +19,8 @@ class ContributionController extends Controller
         }
         return ResponseHelper::badRequest();
     }
+
+    public function getAllContribution() {
+        return ResponseHelper::success(Contribution::with('donor')->get());
+    }
 }
