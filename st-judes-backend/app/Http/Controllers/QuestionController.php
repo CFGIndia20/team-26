@@ -34,4 +34,11 @@ class QuestionController extends Controller
             return  ResponseHelper::badRequest();
         }
     }
+
+    public function updateQuestion(Request $request) {
+        $question = $request->input('id');
+        $question_text = $request->input('question_text');
+        $updatedQuestion = Question::where('id', '=', $question)->update(['question_text']);
+        return ResponseHelper::updated($updatedQuestion);
+    }
 }
