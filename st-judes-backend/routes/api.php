@@ -35,5 +35,7 @@ Route::get('/contribution/unit/{donor_id}', 'ContributionController@getContribut
  * Todo
  */
 Route::get('/contribution/all','ContributionController@getAllContribution');
+Route::get('contribution/donor/all', 'ContributionController@getAllUserContribution');
 Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postComment');
 Route::get('report/insights', 'DonorController@getDonorReport');
+Route::get('donor/{phone_number}');
