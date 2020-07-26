@@ -73,21 +73,9 @@ class Profile extends React.Component {
                                     </Row>
                                     <div className="text-center">
                                         <h3>
-                                            Shivam Goyal
+                                            Ashwin Goyal
                                             <span className="font-weight-light">, 27</span>
                                         </h3>
-                                        <div className="h5 font-weight-300">
-                                            <i className="ni location_pin mr-2" />
-                                            New Delhi, India
-                                        </div>
-                                        <div className="h5 mt-4">
-                                            <i className="ni business_briefcase-24 mr-2" />
-                                            Chief Technology Officer
-                                        </div>
-                                        <div>
-                                            <i className="ni education_hat mr-2" />
-                                            Thapar Institute of Engineering &amp; Technology
-                                        </div>
                                         <hr className="my-4" />
                                         <p>
                                             Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick

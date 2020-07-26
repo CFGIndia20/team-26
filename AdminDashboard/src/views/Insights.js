@@ -41,7 +41,7 @@ class Tables extends React.Component {
 
     componentDidMount() {
         axios.get("http://localhost:8000/api/report/insights").then((res) => {
-            this.setState({ data: res.data.data });
+            this.setState({ data: res.data.data[0] });
             console.log(res.data.data);
         });
     }
