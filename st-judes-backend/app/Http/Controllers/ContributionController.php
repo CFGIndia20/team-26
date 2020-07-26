@@ -21,6 +21,6 @@ class ContributionController extends Controller
     }
 
     public function getAllContribution() {
-        return ResponseHelper::success(Contribution::all());
+        return ResponseHelper::success(Contribution::with('donor')->get());
     }
 }
