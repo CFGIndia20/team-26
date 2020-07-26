@@ -31,13 +31,13 @@ To provide a software solution to ease the work of the NGO's.
     
     4.2 Managing the Entire Inventory System for the products that are donated by the donors also managing the donors, patients and order categories which St. Jude's India child care centres focus on providing.
     
-    <img scr="images/WhatsApp Image 2020-07-26 at 10.14.25 AM.jpeg"/>
-     <img scr="images/WhatsApp Image 2020-07-26 at 10.14.29 AM.jpeg"/>
-      <img scr="images/WhatsApp Video 2020-07-26 at 10.14.27 AM.mp4"/>
-       <img scr="images/WhatsApp Video 2020-07-26 at 10.29.05 AM.mp4"/>
-        <img scr="images/WhatsApp Video 2020-07-26 at 10.29.06 AM.mp4"/>
-         <img scr="images/WhatsApp Video 2020-07-26 at 10.41.00 AM.mp4"/>
-          
+    
+    ![Watch](images/1.jpeg)
+    ![Watch](images/2.jpeg)
+    ![Watch](images/3.mp4)
+    ![Watch](images/4.mp4)
+    ![Watch](images/6.mp4)
+    ![Watch](images/5.mp4)
     
     
    
