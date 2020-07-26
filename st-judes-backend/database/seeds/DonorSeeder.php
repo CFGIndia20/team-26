@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DonorSeeder extends Seeder
@@ -11,6 +12,8 @@ class DonorSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Donor::class, rand(10, 20))->create();
+        foreach (User::where('role_id', 1)->get() as $user){
+            factory(\App\Donor::class)->create(['user_id'=>$user->id]);
+        }
     }
 }

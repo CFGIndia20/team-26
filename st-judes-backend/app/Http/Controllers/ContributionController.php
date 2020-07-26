@@ -7,6 +7,7 @@ use App\Donor;
 use App\Helper\ResponseHelper;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContributionController extends Controller
 {
@@ -21,6 +22,29 @@ class ContributionController extends Controller
     }
 
     public function getAllContribution() {
-        return ResponseHelper::success(Contribution::all());
+        return ResponseHelper::success(Contribution::with('donor.user')->get());
+    }
+
+    public function getAllUserContribution() {
+        $donorContribution =  DB::table('contributions')
+            ->join('donors', 'donors.id', '=','contributions.donor_id')
+            ->join('users', 'users.id', '=','donors.user_id')
+            ->join('donor_units', 'donors.id', '=','donor_units.donor_id')
+            ->select([
+                DB::raw("sum(contributions.amount) as contribution_amount"),
+                "contributions.*",
+                'users.name',
+            ])
+            ->groupBy('contributions.donor_id')
+            ->orderBy('contribution_amount', 'desc')
+            ->get();
+            return ResponseHelper::success($donorContribution);
+    }
+
+    public function postAdminFeedback(Request $request, $id) {
+        $questionResponse = Contribution::where('id', $id)->update([
+            "admin_feedback"=> $request->input('admin_feedback')
+        ]);
+        return ResponseHelper::updated($questionResponse);
     }
 }
