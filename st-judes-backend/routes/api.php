@@ -31,12 +31,13 @@ Route::get('/questions', 'QuestionController@getAll');
 Route::get('/contribution/centre/{donor_id}', 'ContributionController@getContribution');
 Route::get('/contribution/unit/{donor_id}', 'ContributionController@getContribution');
 Route::get('report/insights', 'DonorController@getDonorReport');
+Route::get('donor/{phone_number}', 'DonorController@getDonorByPhoneNumber');
+
+Route::get('/contribution/all','ContributionController@getAllContribution');
 
 /**
  * Todo
  */
-Route::get('/contribution/all','ContributionController@getAllContribution');
 Route::get('contribution/donor/all', 'ContributionController@getAllUserContribution');
 Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postComment');
-Route::get('donor/{phone_number}', 'DonorController@getDonorByPhoneNumber');
 Route::get('patient/strength', 'PatientController@getStengthNumber');
