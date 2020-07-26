@@ -1,13 +1,13 @@
-###Humans of St. Jude's - Puzzlers [26]
+### Humans of St. Jude's - Puzzlers [26]
 
-##Mission
+## Mission
 St. Judes aim is to provide clean, safe and cost free accommodation to children and their accompanying relatives coming from small villages and distant towns who are undergoing treatment for chronic diseases in metro cities of India.
 
 
 To provide a software solution to ease the work of the NGO's.
 
 
-##Problem Statement 
+## Problem Statement 
 1. Processing:
  To get feedback from the families to children suffering from chronic diseases like cancer, overcoming the barriers like Family background, Manipulation of feedback, Lengthy Questionnaire, Language Barrier etc and to have an automated communication with the donors, to answer their queries at any time.
  
