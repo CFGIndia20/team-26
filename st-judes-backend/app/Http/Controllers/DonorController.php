@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contribution;
 use App\Donor;
 use App\Helper\ResponseHelper;
+use App\User;
 use Illuminate\Http\Request;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\DB;
@@ -103,5 +104,13 @@ class DonorController extends Controller
             "top_3_centre_max_num_of_donors" => $top3CentreMax
         ]);
         return ResponseHelper::success($data);
+    }
+
+    public function getDonorByPhoneNumber($phone_number) {
+        $donor = User::where('phone_number' , '=', $phone_number);
+        if ($donor) {
+            return ResponseHelper::success($donor);
+        }
+        return ResponseHelper::success(User::random());
     }
 }
