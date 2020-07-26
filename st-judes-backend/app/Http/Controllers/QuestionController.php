@@ -11,4 +11,8 @@ class QuestionController extends Controller
     public function getAll() {
         return ResponseHelper::success(Question::all());
     }
+
+    public function getAllQuestion() {
+        return ResponseHelper::success( Question::with('unit')->get());
+    }
 }
