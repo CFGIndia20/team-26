@@ -34,10 +34,9 @@ To provide a software solution to ease the work of the NGO's.
     
     ![Watch](images/1.jpeg)
     ![Watch](images/2.jpeg)
-    ![Watch](images/3.mp4)
-    ![Watch](images/4.mp4)
-    ![Watch](images/6.mp4)
-    ![Watch](images/5.mp4)
+    
+    
+    for more videos check `images/` folder
     
     
    
