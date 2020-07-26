@@ -38,7 +38,7 @@ class QuestionController extends Controller
     public function updateQuestion(Request $request) {
         $question = $request->input('id');
         $question_text = $request->input('question_text');
-        $updatedQuestion = Question::where('id', '=', $question)->update(['question_text']);
+        $updatedQuestion = Question::where('id', '=', $question)->update(['question_text' => $question_text]);
         return ResponseHelper::updated($updatedQuestion);
     }
 }
