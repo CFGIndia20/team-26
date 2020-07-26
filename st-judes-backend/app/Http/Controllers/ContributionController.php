@@ -22,7 +22,7 @@ class ContributionController extends Controller
     }
 
     public function getAllContribution() {
-        return ResponseHelper::success(Contribution::with('donor')->get());
+        return ResponseHelper::success(Contribution::with('donor.user')->get());
     }
 
     public function getAllUserContribution() {
@@ -39,5 +39,12 @@ class ContributionController extends Controller
             ->orderBy('contribution_amount', 'desc')
             ->get();
             return ResponseHelper::success($donorContribution);
+    }
+
+    public function postAdminFeedback(Request $request, $id) {
+        $questionResponse = Contribution::where('id', $id)->update([
+            "admin_feedback"=> $request->input('admin_feedback')
+        ]);
+        return ResponseHelper::updated($questionResponse);
     }
 }

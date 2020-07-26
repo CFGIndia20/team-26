@@ -41,5 +41,5 @@ Route::get('contribution/donor/all', 'ContributionController@getAllUserContribut
 /**
  * Todo
  */
-Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postComment');
+Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postAdminFeedback');
 
