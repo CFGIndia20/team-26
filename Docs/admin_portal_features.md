@@ -11,6 +11,10 @@ Get donor details whose verification is in progress
 POST /donor/updateVerificationStatus
 BODY: DonorId
       isVerified Status(0/1/2)
+
+GET /centres
+
+GET /units
 ```
 
 2. View User Feedback
@@ -34,7 +38,7 @@ BODY: ContributionId
       Comment
 ```
 
-4. Get Reports
+4. Get Insights
 
 ```
 GET /reports/contributions?startDate=<startDate&endDate=<endDate>
