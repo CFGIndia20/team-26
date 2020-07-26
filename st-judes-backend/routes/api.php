@@ -38,4 +38,5 @@ Route::get('report/insights', 'DonorController@getDonorReport');
 Route::get('/contribution/all','ContributionController@getAllContribution');
 Route::get('contribution/donor/all', 'ContributionController@getAllUserContribution');
 Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postComment');
-Route::get('donor/{phone_number}');
+Route::get('donor/{phone_number}', 'DonorController@getDonorByPhoneNumber');
+Route::get('patient/strength', 'PatientController@getStengthNumber');
