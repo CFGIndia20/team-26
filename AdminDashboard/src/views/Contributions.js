@@ -1,5 +1,5 @@
 import React from "react";
-
+import axios from "axios";
 // reactstrap components
 import {
     Card,
@@ -19,7 +19,6 @@ import {
     Label,
 } from "reactstrap";
 
-
 // core components
 import Header from "components/Headers/Header.js";
 
@@ -32,46 +31,21 @@ class Tables extends React.Component {
             modal: false,
             tempDonorId: "",
             tempDonorName: "",
-            tempDonorMobile: "",
-            tempDonorEmail: "",
-            tempStatus: "",
-            tempDonorCentre: "",
-            tempDonorUnit: "",
+            tempDonorphone_number: "",
             tempDonorFeedback: "",
-            donors: [
-                {
-                    id: "sduifnu4w4",
-                    name: "Ashwin",
-                    mobile: "993848294",
-                    description: "Monetary Donation",
-                    amount: "10000",
-                    feedback: "The money was used to buy wheat, Rice, Pulses.",
-                },
-                {
-                    id: "erihnentohn",
-                    name: "Harsh",
-                    mobile: "998438294",
-                    description: "Physical Goods: 100 KG Rice",
-                    amount: "-",
-                    feedback: "",
-                },
-                {
-                    id: "weonowngw",
-                    name: "Anmol",
-                    mobile: "98433849",
-                    description: "Monetary Donation",
-                    amount: "50000",
-                    feedback: "",
-                },
-            ],
+            donors: [],
         };
     }
 
     componentDidMount() {
         //Fetch centers
         //Fetch units
-        //Fetch non verified donors
-        // this.setState({ filteredTrips: this.state.trips });
+        //Fetch contributions
+
+        axios.get("http://localhost:8000/api/contribution/all").then((res) => {
+            console.log(res.data.data);
+            this.setState({ donors: res.data.data });
+        });
     }
 
     onModalClickHandler = (e) => {
@@ -80,18 +54,19 @@ class Tables extends React.Component {
                 modal: false,
                 tempDonorId: "",
                 tempDonorName: "",
-                tempDonorMobile: "",
+                tempDonorphone_number: "",
                 tempDonorAmount: "",
                 tempDonorDescription: "",
                 tempDonorFeedback: "",
             });
         } else {
-            let donor = this.state.donors.find((x) => x.id === e.target.name);
+            let donor = this.state.donors.find((x) => x.id == e.target.name);
+            console.log("DONOR", donor);
             this.setState({
                 modal: true,
                 tempDonorId: e.target.name,
-                tempDonorName: donor.name,
-                tempDonorMobile: donor.mobile,
+                tempDonorName: donor.donor.user.name,
+                tempDonorphone_number: donor.donor.user.phone_number,
                 tempDonorAmount: donor.amount,
                 tempDonorDescription: donor.description,
                 tempDonorFeedback: donor.feedback,
@@ -105,7 +80,15 @@ class Tables extends React.Component {
     };
 
     onSubmitRequestHandler = (event) => {
-        console.log("hello");
+        let contri = {
+            admin_feedback: this.state.tempDonorFeedback,
+        };
+        axios
+            .post("http://localhost:8000/api/contribution/" + this.state.tempDonorId + "/commit", contri)
+            .then((res) => {
+                alert("Feedback updated!!");
+                this.onModalClickHandler();
+            });
     };
 
     render() {
@@ -149,9 +132,8 @@ class Tables extends React.Component {
                                                                     Update
                                                                 </Button>
                                                             </td>
-                                                            {/* <td>{donor.id}</td> */}
-                                                            <td>{donor.name}</td>
-                                                            <td>{donor.mobile}</td>
+                                                            <td>{donor.donor.user.name}</td>
+                                                            <td>{donor.donor.user.phone_number}</td>
                                                             <td>{donor.description}</td>
                                                             <td>{donor.amount}</td>
                                                         </tr>
@@ -176,8 +158,8 @@ class Tables extends React.Component {
                                     <td>{this.state.tempDonorName}</td>
                                 </tr>
                                 <tr>
-                                    <td>Mobile</td>
-                                    <td>{this.state.tempDonorMobile}</td>
+                                    <td>phone_number</td>
+                                    <td>{this.state.tempDonorphone_number}</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
