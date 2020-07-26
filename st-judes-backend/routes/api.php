@@ -36,10 +36,7 @@ Route::get('/contribution/all','ContributionController@getAllContribution');
 Route::get('patient/strength', 'PatientController@getStrengthNumber');
 Route::get('/question', "QuestionController@getAllQuestion");
 Route::post('/question-response', "QuestionController@postAllQuestionResponse");
-
-/**
- * Todo
- */
 Route::get('contribution/donor/all', 'ContributionController@getAllUserContribution');
-Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postComment');
+Route::post('/contribution/{contribution_id}/comment', 'ContributionController@postAdminFeedback');
 
+Route::post('/question/update', 'QuestionController@updateQuestion');
